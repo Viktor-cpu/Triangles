@@ -28,26 +28,21 @@ public class Main {
             while ((line = bufferedReader.readLine()) != null) {
                 trianglesSrt.add(line); // запись строки(треугольков) в trianglesSrt
             }
-
             bufferedReader.close();
-        } catch (Exception e) {
-            e.getMessage();
-            //System.out.println("ОШИБКА В ПУТИ К ФАЙЛУ");
-        }
         //-----Блок обработки входного файла-----
 
 
-        //-----Блок вычисления площади и поиска наибольшего-----
-        double maxS = -1; // Для запоминания большей площади
-        StringBuilder maxName = new StringBuilder(""); // Для запоминания кординат большего трейгольника
+            //-----Блок вычисления площади и поиска наибольшего-----
+            double maxS = -1; // Для запоминания большей площади
+            StringBuilder maxName = new StringBuilder(""); // Для запоминания кординат большего трейгольника
 
-        for (String triangleSrt : trianglesSrt) {
+            for (String triangleSrt : trianglesSrt) {
 
-            String[] trianglesCordsSrt = triangleSrt.split(" "); // Парсим на кординаты
+                String[] trianglesCordsSrt = triangleSrt.split(" "); // Парсим на кординаты
 
-            if (trianglesCordsSrt.length != 6) {
-                System.out.println("Ошибка формата входных данных. " + triangleSrt ); // Выводим ошибку, если элементов не 6
-            } else {
+                if (trianglesCordsSrt.length != 6) {
+                    System.out.println("Ошибка формата входных данных. " + triangleSrt ); // Выводим ошибку, если элементов не 6
+                } else {
 
                     try {
 
@@ -68,27 +63,36 @@ public class Main {
                     } catch (NumberFormatException ex) {
                         System.out.println("Ошибка формата входных данных. " + triangleSrt ); // Если не удалось привести к int
                     }
+                }
+
             }
 
+
+            if(maxS!=-1 && !maxName.equals("")){
+                System.out.println("Максимальный треугольник: " + maxName +", с площадью: " + maxS);
+            }
+            //-----Блок вычисления площади и поиска наибольшего-----
+
+
+            //-----Блок записи в файл-----
+            try(FileWriter writer = new FileWriter(outFile+".txt", false))
+            {
+                writer.write(maxName.toString());
+                writer.flush();
+            }
+            catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
+            //-----Блок записи в файл-----
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
 
-        if(maxS!=-1 && !maxName.equals("")){
-            System.out.println("Максимальный треугольник: " + maxName +", с площадью: " + maxS);
-        }
-        //-----Блок вычисления площади и поиска наибольшего-----
 
 
-        //-----Блок записи в файл-----
-        try(FileWriter writer = new FileWriter(outFile+".txt", false))
-        {
-            writer.write(maxName.toString());
-            writer.flush();
-        }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
-        //-----Блок записи в файл-----
 
     }
 
